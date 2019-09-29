@@ -8,6 +8,7 @@ public class Move : MonoBehaviour {
 	public GameObject aim;
 	public Slider arrow;
 	public float max_mov_velocity = 5.0f;
+    public float rotation = 0.0f; // degrees
 
     KinematicSeek seek;
     KinematicFlee flee;
@@ -16,8 +17,13 @@ public class Move : MonoBehaviour {
 
     private Vector3 tank;
 
-	// Use this for initialization
-	public void SetMovementVelocity (Vector3 vel) {
+    public void SetRotationVelocity(float rotation_velocity)
+    {
+        rotation = rotation_velocity;
+    }
+
+    // Use this for initialization
+    public void SetMovementVelocity (Vector3 vel) {
 		mov_velocity = vel;
 	}
 
@@ -50,7 +56,7 @@ public class Move : MonoBehaviour {
         // that direction. Adjust with some factor so the arrow is visible.
         arrow.value = mov_velocity.magnitude + 4.0f;
 
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
+        //transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
 
         // TODO 5: update tank position based on final mov_velocity and deltatime
         transform.position = transform.position + (mov_velocity * Time.deltaTime );
