@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
 
     private int count;
 
+    public GameObject other;
+
+    private Respawn respawn;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -48,9 +52,16 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
+        //if (count == respawn.GetComponent<Respawn>().numberOfObjects)
         if (count >= 8)
         {
             winText.text = "You Win!";
+
+            //respawn.GetComponent<Respawn>().Start();
         }
     }
+
+
+
 }
+

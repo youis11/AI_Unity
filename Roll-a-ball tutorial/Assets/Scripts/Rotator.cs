@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
     
     private bool come = false;
 
@@ -34,7 +34,6 @@ public class Rotator : MonoBehaviour
             }
         }
        
-
         if (come == false)
         {
             velocity = 5;
@@ -47,3 +46,4 @@ public class Rotator : MonoBehaviour
         }
     }
 }
+
