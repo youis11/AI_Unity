@@ -32,11 +32,21 @@ public class SteeringPursue : MonoBehaviour {
 
         Vector3 diff = move.target.transform.position - transform.position;
 
-        Vector3 diff_norm = diff.normalized * move.max_mov_speed;
+        float distance = diff.magnitude;
+        float speed = move.movement.magnitude;
+        float fake_prediction;
+
+        // is the speed too small ?
+        if (speed < distance / max_seconds_prediction)
+            fake_prediction = max_seconds_prediction;
+        else
+            fake_prediction = distance / speed;
+
+        arrive.Steer(move.target.transform.position + (target_velocity * fake_prediction));
 
 
-            // TODO 6: Improve the prediction based on the distance from
-            // our target and the speed we have
+        // TODO 6: Improve the prediction based on the distance from
+        // our target and the speed we have
 
-        }
+    }
 }
