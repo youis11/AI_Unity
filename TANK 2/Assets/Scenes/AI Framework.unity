@@ -3166,6 +3166,8 @@ GameObject:
   - component: {fileID: 1268264606}
   - component: {fileID: 1268264607}
   - component: {fileID: 1268264608}
+  - component: {fileID: 1268264597}
+  - component: {fileID: 1268264609}
   - component: {fileID: 1268264595}
   m_Layer: 9
   m_Name: Agent 01
@@ -3207,6 +3209,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e4f729fb7ecb4f4cb534791f38b264e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1268264597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268264594}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b93a3e8c7d8818348a698709677571ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max_seconds_prediction: 1
 --- !u!114 &1268264598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3214,7 +3229,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268264594}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b13ae3cbc54e44631ae987b5486c59f4, type: 3}
   m_Name: 
@@ -3357,6 +3372,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_seconds_prediction: 2.5
+--- !u!114 &1268264609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268264594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e439e859d063a4ca9983e1f7bb60411a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  min_distance: 0.1
+  time_to_target: 0.25
+  wanderRate: 0.1
+  distanceToCircle: 4
+  circleRadius: 1
 --- !u!1 &1306440706
 GameObject:
   m_ObjectHideFlags: 0
@@ -3973,6 +4005,7 @@ GameObject:
   - component: {fileID: 1687990151}
   - component: {fileID: 1687990150}
   - component: {fileID: 1687990149}
+  - component: {fileID: 1687990161}
   - component: {fileID: 1687990148}
   m_Layer: 9
   m_Name: Agent 01 (1)
@@ -4009,7 +4042,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687990147}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e00aba7cc561b495a9a1faa0fad585dd, type: 3}
   m_Name: 
@@ -4163,6 +4196,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1687990161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687990147}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b93a3e8c7d8818348a698709677571ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max_seconds_prediction: 2.5
 --- !u!1 &1717927643
 GameObject:
   m_ObjectHideFlags: 0

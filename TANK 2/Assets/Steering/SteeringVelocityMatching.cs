@@ -22,6 +22,16 @@ public class SteeringVelocityMatching : MonoBehaviour {
             // TODO 8: First come up with your ideal velocity
             // then accelerate to it.
 
+            //similar to steeringArrive
+            Vector3 ideal_velocity = target_move.movement;
+
+            Vector3 accel = ideal_velocity - move.movement;
+            accel = accel / time_to_accel;
+   
+            if (accel.magnitude > move.max_mov_acceleration)
+                accel = accel.normalized * move.max_mov_acceleration;
+
+            move.AccelerateMovement(accel);
         }
 	}
 }

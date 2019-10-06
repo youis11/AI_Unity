@@ -36,7 +36,6 @@ public class SteeringPursue : MonoBehaviour {
         float speed = move.movement.magnitude;
         float fake_prediction;
 
-        // is the speed too small ?
         if (speed < distance / max_seconds_prediction)
             fake_prediction = max_seconds_prediction;
         else
