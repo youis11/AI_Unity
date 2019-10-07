@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class my_ray
-{
-    public float length = 2.0f;
-    public Vector3 direction = Vector3.forward;
-}
-
 public class SteeringObstacleAvoidance : MonoBehaviour {
 
 	public LayerMask mask;
 	public float avoid_distance = 5.0f;
-    public my_ray[] rays;
+
 
     Move move;
 	SteeringSeek seek;
 
-	// Use this for initialization
-	void Start () {
+    [System.Serializable]
+    public class MyRay
+    {
+        public Vector3 direction;
+        public float length;
+    }
+
+    public MyRay[] rays;
+
+    // Use this for initialization
+    void Start () {
 		move = GetComponent<Move>(); 
 		seek = GetComponent<SteeringSeek>();
 	}
@@ -36,7 +39,7 @@ public class SteeringObstacleAvoidance : MonoBehaviour {
         Quaternion q = Quaternion.AngleAxis(Mathf.Rad2Deg * angle, Vector3.up);
 
         //3- Cast all rays with foreach
-        foreach (my_ray ray in rays)
+        foreach (MyRay ray in rays)
         {
             RaycastHit hitInfo;
 
@@ -61,7 +64,7 @@ public class SteeringObstacleAvoidance : MonoBehaviour {
             // TODO 2: Debug draw thoise rays (Look at Gizmos.DrawLine)
 
             //position + dir * length
-            foreach (my_ray ray in rays)
+            foreach (MyRay ray in rays)
                 Gizmos.DrawLine(transform.position, transform.position + (q * ray.direction.normalized) * ray.length); 
         }
 	}
