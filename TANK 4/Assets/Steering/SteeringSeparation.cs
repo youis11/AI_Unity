@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SteeringSeparation : MonoBehaviour {
+public class SteeringSeparation : Steering {
 
 	public LayerMask mask;
 	public float search_radius = 5.0f;
@@ -39,7 +39,7 @@ public class SteeringSeparation : MonoBehaviour {
         {
             if(final_strength > move.max_mov_acceleration)
                 final = final.normalized * move.max_mov_acceleration;
-            move.AccelerateMovement(final);
+            move.AccelerateMovement(final, priority);
         }
     }
 

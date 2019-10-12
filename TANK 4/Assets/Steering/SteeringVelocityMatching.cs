@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SteeringVelocityMatching : MonoBehaviour {
+public class SteeringVelocityMatching : Steering {
 
 	public float time_to_target = 0.25f;
 
@@ -33,7 +33,7 @@ public class SteeringVelocityMatching : MonoBehaviour {
 				acceleration *= move.max_mov_acceleration;
 			}
 
-			move.AccelerateMovement(acceleration);
+			move.AccelerateMovement(acceleration,priority);
 		}
 	}
 }

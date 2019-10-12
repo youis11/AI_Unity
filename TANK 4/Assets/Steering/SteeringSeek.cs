@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SteeringSeek : MonoBehaviour {
+public class SteeringSeek : Steering {
 
 	Move move;
 
@@ -25,6 +25,6 @@ public class SteeringSeek : MonoBehaviour {
 		diff.Normalize ();
 		diff *= move.max_mov_acceleration;
 
-		move.AccelerateMovement(diff);
+		move.AccelerateMovement(diff, priority);
 	}
 }

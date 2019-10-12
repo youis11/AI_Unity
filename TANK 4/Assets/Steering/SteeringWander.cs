@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SteeringWander : MonoBehaviour {
+public class SteeringWander : Steering {
 
 	public Vector3 offset = Vector3.zero;
 	public float radius = 1.0f;

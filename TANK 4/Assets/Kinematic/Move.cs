@@ -16,15 +16,20 @@ public class Move : MonoBehaviour {
 	public Vector3 current_velocity = Vector3.zero;
 	public float current_rotation_speed = 0.0f; // degrees
 
-	// Methods for behaviours to set / add velocities
-	public void SetMovementVelocity (Vector3 velocity) 
+    //NEW
+    Vector3[] movementVelocity = new Vector3[SteeringConfig.priority_num];
+    float[] angularVelocity = new float[SteeringConfig.priority_num];
+
+    // Methods for behaviours to set / add velocities
+    public void SetMovementVelocity (Vector3 velocity) 
 	{
         current_velocity = velocity;
 	}
 
-	public void AccelerateMovement (Vector3 acceleration) 
+    //NEW
+	public void AccelerateMovement (Vector3 acceleration, int priority) 
 	{
-        current_velocity += acceleration;
+        movementVelocity[priority] = acceleration;
 	}
 
 	public void SetRotationVelocity (float rotation_speed) 
@@ -32,16 +37,37 @@ public class Move : MonoBehaviour {
         current_rotation_speed = rotation_speed;
 	}
 
-	public void AccelerateRotation (float rotation_acceleration) 
+    //NEW
+	public void AccelerateRotation (float rotation_acceleration, int priority) 
 	{
-        current_rotation_speed += rotation_acceleration;
+        angularVelocity[priority] = rotation_acceleration;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		// cap velocity
-		if(current_velocity.magnitude > max_mov_speed)
+        //NEW
+        for (int i = 0; i < movementVelocity.Length; ++i)
+        {
+            if (!Mathf.Approximately(movementVelocity[i].magnitude, 0.0f))
+            {
+                current_velocity = movementVelocity[i];
+                break;
+            }
+        }
+
+        //NEW
+        for (int i = 0; i < angularVelocity.Length; ++i)
+        {
+            if (!Mathf.Approximately(angularVelocity[i], 0.0f))
+            {
+                current_rotation_speed = angularVelocity[i];
+                break;
+            }
+        }
+
+        // cap velocity
+        if (current_velocity.magnitude > max_mov_speed)
 		{
             current_velocity = current_velocity.normalized * max_mov_speed;
 		}
@@ -61,5 +87,12 @@ public class Move : MonoBehaviour {
 
 		// finally move
 		transform.position += current_velocity * Time.deltaTime;
-	}
+
+        //NEW
+        for (int i = 0; i < SteeringConfig.priority_num; ++i)
+        {
+            movementVelocity[i] = Vector3.zero;
+            angularVelocity[i] = 0.0f;
+        }
+    }
 }
