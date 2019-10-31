@@ -23,9 +23,9 @@ public class SteeringVelocityMatching : Steering {
             // then accelerate to it.
 
             //similar to steeringArrive
-            Vector3 ideal_velocity = target_move.movement;
+            Vector3 ideal_velocity = target_move.current_velocity;
 
-            Vector3 accel = ideal_velocity - move.movement;
+            Vector3 accel = ideal_velocity - move.current_velocity;
             accel = accel / time_to_accel;
 
             if (accel.magnitude > move.max_mov_acceleration)

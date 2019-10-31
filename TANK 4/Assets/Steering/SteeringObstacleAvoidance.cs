@@ -35,7 +35,7 @@ public class SteeringObstacleAvoidance : Steering {
         // 4- Make sure there is debug draw for all rays (below in OnDrawGizmosSelected)
 
         //2 - Quaternion like move.cs
-        float angle = Mathf.Atan2(move.mov_velocity.x, move.mov_velocity.z);
+        float angle = Mathf.Atan2(move.current_velocity.x, move.current_velocity.z);
         Quaternion q = Quaternion.AngleAxis(Mathf.Rad2Deg * angle, Vector3.up);
 
         //3- Cast all rays with foreach
@@ -57,7 +57,7 @@ public class SteeringObstacleAvoidance : Steering {
         if(move && this.isActiveAndEnabled)
         {
             Gizmos.color = Color.red;
-            float angle = Mathf.Atan2(move.mov_velocity.x, move.mov_velocity.z);
+            float angle = Mathf.Atan2(move.current_velocity.x, move.current_velocity.z);
             Quaternion q = Quaternion.AngleAxis(Mathf.Rad2Deg * angle, Vector3.up);
 
             // TODO 2: Debug draw thoise rays (Look at Gizmos.DrawLine)

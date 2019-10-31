@@ -43,7 +43,7 @@ public class SteeringArrive : Steering {
             if (slow_distance > diff.magnitude)
                 diff_norm = diff_norm * (diff.magnitude / slow_distance);
 
-            Vector3 desired_acc = diff_norm - move.movement;
+            Vector3 desired_acc = diff_norm - move.current_velocity;
             desired_acc /= time_to_accel;
             if (desired_acc.magnitude > move.max_mov_acceleration)
                 desired_acc = desired_acc.normalized * move.max_mov_acceleration;

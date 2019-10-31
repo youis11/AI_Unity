@@ -19,7 +19,7 @@ public class SteeringEvade : Steering
     // Update is called once per frame
     void Update()
     {
-        Steer(move.target.transform.position, move.target.GetComponent<Move>().movement);
+        Steer(move.target.transform.position, move.target.GetComponent<Move>().current_velocity);
     }
 
     public void Steer(Vector3 target, Vector3 target_velocity)
@@ -31,7 +31,7 @@ public class SteeringEvade : Steering
         Vector3 diff = transform.position - move.target.transform.position;
 
         float distance = diff.magnitude;
-        float speed = move.movement.magnitude;
+        float speed = move.current_velocity.magnitude;
         float fake_prediction;
 
         if (speed < distance / max_seconds_prediction)

@@ -40,7 +40,7 @@ public class SteeringCollisionAvoidance : Steering {
 
             // calculate time to collision
             Vector3 relative_pos = go.transform.position - transform.position;
-            Vector3 relative_vel = target_move.mov_velocity - move.mov_velocity;
+            Vector3 relative_vel = target_move.current_velocity - move.current_velocity;
             float relative_speed = relative_vel.magnitude;
             float time_to_collision = Vector3.Dot(relative_pos, relative_vel) / relative_speed * relative_speed;
 
