@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SteeringVelocityMatching : Steering {
 
-	public float time_to_target = 0.25f;
+	public float time_to_accel = 0.25f;
 
 	Move move;
 	Move target_move;
@@ -19,21 +19,19 @@ public class SteeringVelocityMatching : Steering {
 	{
 		if(target_move)
 		{
-			// Create a vector that describes the ideal velocity
-			Vector3 ideal_movement = target_move.current_velocity;
+            // TODO 8: First come up with your ideal velocity
+            // then accelerate to it.
 
-			// Calculate acceleration needed to match that velocity
-			Vector3 acceleration = ideal_movement - move.current_velocity;
-			acceleration /= time_to_target;
+            //similar to steeringArrive
+            Vector3 ideal_velocity = target_move.movement;
 
-			// Cap acceleration
-			if(acceleration.magnitude > move.max_mov_acceleration)
-			{
-				acceleration.Normalize();
-				acceleration *= move.max_mov_acceleration;
-			}
+            Vector3 accel = ideal_velocity - move.movement;
+            accel = accel / time_to_accel;
 
-			move.AccelerateMovement(acceleration,priority);
-		}
+            if (accel.magnitude > move.max_mov_acceleration)
+                accel = accel.normalized * move.max_mov_acceleration;
+
+            move.AccelerateMovement(accel,priority);
+        }
 	}
 }

@@ -16,20 +16,25 @@ public class KinematicArrive : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		Vector3 diff = move.target.transform.position - transform.position;
+        // TODO 8: calculate the distance. If we are in min_distance radius, we stop moving
+        // Otherwise devide the result by time_to_target (0.25 feels good)
+        // Then call move.SetMovementVelocity()
+        Vector3 dis = move.target.transform.position - transform.position;
 
-		if(diff.magnitude < min_distance)
-			move.SetMovementVelocity(Vector3.zero);
+        if (dis.magnitude < min_distance)
+            move.SetMovementVelocity(Vector3.zero);
+        //else
+        //{
+        dis /= time_to_target;
 
-		diff /= time_to_target;
+        move.SetMovementVelocity(dis);
+        //}
+    }
 
-		move.SetMovementVelocity(diff);
-	}
-
-	void OnDrawGizmosSelected() 
+    void OnDrawGizmosSelected() 
 	{
-		// Display the explosion radius when selected
-		Gizmos.color = Color.white;
-		Gizmos.DrawWireSphere(transform.position, min_distance);
-	}
+        // Display the explosion radius when selected
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, min_distance);
+    }
 }

@@ -6,34 +6,42 @@ public class SteeringPursue : Steering {
 	public float max_seconds_prediction = 5.0f;
 
 	Move move;
-	SteeringArrive arrive;
+    SteeringSeek seek;
+    SteeringArrive arrive;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		move = GetComponent<Move>();
-		arrive = GetComponent<SteeringArrive>();
+        seek = GetComponent<SteeringSeek>();
+        arrive = GetComponent<SteeringArrive>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		Steer(move.target.transform.position, move.target.GetComponent<Move>().current_velocity);
+		Steer(move.target.transform.position, move.target.GetComponent<Move>().max_mov_velocity);
 	}
 
-	public void Steer(Vector3 target, Vector3 velocity)
-	{
-		Vector3 diff = target - transform.position;
+    public void Steer(Vector3 target, Vector3 target_velocity, float max_target_speed)
+    {
+        // TODO 5: Create a fake position to represent
+        // enemies predicted movement. Then call Steer()
+        // on our Steering Seek / Arrive with the predicted position in
+        // max_seconds_prediction time
+        // Be sure that arrive / seek's update is not called at the same time
 
-		float distance = diff.magnitude;
-		float current_speed = move.current_velocity.magnitude;
-		float prediction;
+        Vector3 diff = move.target.transform.position - transform.position;
 
-		// is the speed too small ?
-		if(current_speed < distance / max_seconds_prediction)
-			prediction = max_seconds_prediction;
-		else
-			prediction = distance / current_speed;
+        float distance = diff.magnitude;
+        float speed = move.movement.magnitude;
+        float fake_prediction;
 
-		arrive.Steer(target + (velocity * prediction));
-	}
+        if (speed < distance / max_seconds_prediction)
+            fake_prediction = max_seconds_prediction;
+        else
+            fake_prediction = distance / speed;
+
+        arrive.Steer(move.target.transform.position + (target_velocity * fake_prediction));
+
+    }
 }

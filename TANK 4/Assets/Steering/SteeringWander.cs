@@ -3,46 +3,53 @@ using System.Collections;
 
 public class SteeringWander : Steering {
 
-	public Vector3 offset = Vector3.zero;
-	public float radius = 1.0f;
-	public float min_update = 0.5f;
-	public float max_update = 3.0f;
+    public float min_distance = 0.1f;
+    public float time_to_target = 0.25f;
 
-	SteeringSeek seek;
-	Vector3 random_point;
+    Move move;
+    SteeringSeek seek;
 
-	// Use this for initialization
-	void Start () {
-		seek = GetComponent<SteeringSeek>();
-		ChangeTarget();
-	}
+    public float wanderRate = 0.1f;
+    public float distanceToCircle = 4.0f;
+    public float circleRadius = 1.0f;
 
-    private void Update()
+    private float timer = 0.0f;
+    private Vector3 target = Vector3.zero;
+
+
+    // Use this for initialization
+    void Start()
     {
-        seek.Steer(random_point);
+        move = GetComponent<Move>();
+        seek = GetComponent<SteeringSeek>();
+        timer = wanderRate;
     }
 
     // Update is called once per frame
-    void ChangeTarget () 
-	{
-		random_point = Random.insideUnitSphere;
-		random_point *= radius;
-		random_point += transform.position + offset;
-		random_point.y = transform.position.y;
+    void Update()
+    {
+        if (timer >= wanderRate)
+        {
+            // Update the target
+            Vector3 randomDirection = new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
+            randomDirection.Normalize();
 
-		Invoke("ChangeTarget", Random.Range(min_update, max_update));
-	}
+            Vector3 circlePosition = transform.position + transform.forward * distanceToCircle;
+            target = circlePosition + randomDirection * circleRadius;
 
-	void OnDrawGizmosSelected() 
-	{
-		if(this.isActiveAndEnabled)
-		{
-			// Display the explosion radius when selected
-			Gizmos.color = Color.yellow;
-			Gizmos.DrawWireSphere(transform.TransformPoint(offset), radius);
-		
-			Gizmos.color = Color.red;
-			Gizmos.DrawWireSphere(random_point, 0.2f);
-		}
-	}
+            timer = 0.0f;
+        }
+
+        timer += Time.deltaTime;
+
+        seek.Steer(move.target.transform.position);
+
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Display the explosion radius when selected
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, min_distance);
+    }
 }

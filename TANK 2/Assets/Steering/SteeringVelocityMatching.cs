@@ -3,9 +3,9 @@ using System.Collections;
 
 public class SteeringVelocityMatching : MonoBehaviour {
 
-	public float time_to_accel = 0.25f;
+    public float time_to_target = 0.25f;
 
-	Move move;
+    Move move;
 	Move target_move;
 
 	// Use this for initialization

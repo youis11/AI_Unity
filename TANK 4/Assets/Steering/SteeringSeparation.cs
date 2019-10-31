@@ -5,9 +5,9 @@ public class SteeringSeparation : Steering {
 
 	public LayerMask mask;
 	public float search_radius = 5.0f;
-	public AnimationCurve falloff;
+    public AnimationCurve strength;
 
-	Move move;
+    Move move;
 
 	// Use this for initialization
 	void Start () {
@@ -17,29 +17,40 @@ public class SteeringSeparation : Steering {
 	// Update is called once per frame
     void Update () 
     {
+        // TODO 1: Agents much separate from each other:
+        // 1- Find other agents in the vicinity (use a layer for all agents)
+        // 2- For each of them calculate a escape vector using the AnimationCurve
+        // 3- Sum up all vectors and trim down to maximum acceleration
+
+        //1 Physics.OverlapSphere 
         Collider[] colliders = Physics.OverlapSphere(transform.position, search_radius, mask);
-        Vector3 final = Vector3.zero;
 
-        foreach(Collider col in colliders)
+        //2 foreach col in colliders
+        Vector3 escapeVectors = Vector3.zero;
+
+        foreach (Collider col in colliders)
         {
-            GameObject go = col.gameObject;
-
-            if(go == gameObject) 
-                continue;
-
-            Vector3 diff = transform.position - go.transform.position;
-            float distance = diff.magnitude;
-            float acceleration = (1.0f - falloff.Evaluate(distance / search_radius)) * move.max_mov_acceleration;
-
-            final += diff.normalized * acceleration;
+            Vector3 escapeVector = transform.position - col.transform.position;
+            escapeVectors = escapeVectors + escapeVector;
         }
 
-        float final_strength = final.magnitude;
-        if(final_strength > 0.0f)
+        escapeVectors.y = 0;
+
+        if (colliders.Length > 1)
+            escapeVectors = escapeVectors / colliders.Length;
+
+        //3 call evaluate using magnitude and radius
+        float time = escapeVectors.magnitude / search_radius;
+        float escapeForce = strength.Evaluate(time);
+        escapeVectors = escapeVectors.normalized * escapeForce;
+
+        //4 cap and call acceleratemovement
+        if (escapeVectors.magnitude > 0)
         {
-            if(final_strength > move.max_mov_acceleration)
-                final = final.normalized * move.max_mov_acceleration;
-            move.AccelerateMovement(final, priority);
+            if (escapeVectors.magnitude > move.max_mov_acceleration)
+                escapeVectors = escapeVectors.normalized * move.max_mov_acceleration;
+
+            move.AccelerateMovement(escapeVectors,priority);
         }
     }
 

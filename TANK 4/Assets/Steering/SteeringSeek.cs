@@ -21,10 +21,11 @@ public class SteeringSeek : Steering {
 		if(!move)
 			move = GetComponent<Move>();
 
-		Vector3 diff = target - transform.position;
-		diff.Normalize ();
-		diff *= move.max_mov_acceleration;
+        // TODO 1: accelerate towards our target at max_acceleration
+        // use move.AccelerateMovement()
+        Vector3 dir = move.target.transform.position - transform.position;
 
-		move.AccelerateMovement(diff, priority);
-	}
+        Vector3 acc = dir * move.max_mov_acceleration;
+        move.AccelerateMovement(acc,priority);
+    }
 }

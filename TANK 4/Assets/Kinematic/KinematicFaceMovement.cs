@@ -15,11 +15,9 @@ public class KinematicFaceMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-        float delta = Vector3.SignedAngle(transform.forward, move.current_velocity, new Vector3(0.0f, 1.0f, 0.0f));
-
-		if(Mathf.Abs(delta) < min_angle)
-			move.SetRotationVelocity(0.0f);
-		else
-			move.SetRotationVelocity(delta);
-	}
+        // TODO 7: rotate the whole tank to look in the movement direction
+        // Extremnely similar to TODO 2
+        float target_degrees = Mathf.Atan2(move.mov_velocity.x, move.mov_velocity.z) * Mathf.Rad2Deg;
+        transform.localRotation = Quaternion.AngleAxis(target_degrees, Vector3.up);
+    }
 }

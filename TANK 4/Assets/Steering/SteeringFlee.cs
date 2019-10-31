@@ -18,10 +18,13 @@ public class SteeringFlee : Steering {
 
 	public void Steer(Vector3 target)
 	{
-		Vector3 diff = transform.position - target;
-		diff.Normalize ();
-		diff *= move.max_mov_acceleration;
+        if (!move)
+            move = GetComponent<Move>();
 
-		move.AccelerateMovement(diff, priority);
-	}
+        // TODO 2: Same as Steering seek but opposite direction
+        Vector3 dir = transform.position - move.target.transform.position;
+
+        Vector3 acc = dir * move.max_mov_acceleration;
+        move.AccelerateMovement(acc,priority);
+    }
 }

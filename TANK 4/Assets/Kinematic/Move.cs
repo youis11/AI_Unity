@@ -2,56 +2,68 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Move : MonoBehaviour {
+public class Move : MonoBehaviour
+{
 
-	public GameObject target;
-	public GameObject aim;
-	public Slider arrow;
-	public float max_mov_speed = 5.0f;
-	public float max_mov_acceleration = 0.1f;
-	public float max_rot_speed = 10.0f; // in degrees / second
-	public float max_rot_acceleration = 0.1f; // in degrees
-
-	[Header("-------- Read Only --------")]
-	public Vector3 current_velocity = Vector3.zero;
-	public float current_rotation_speed = 0.0f; // degrees
+    public GameObject target;
+    public GameObject aim;
+    public Slider arrow;
+    public float max_mov_velocity = 5.0f;
+    public float max_mov_acceleration = 0.1f;
+    public float max_rot_acceleration = 0.1f; // in degrees
 
     //NEW
     Vector3[] movementVelocity = new Vector3[SteeringConfig.priority_num];
     float[] angularVelocity = new float[SteeringConfig.priority_num];
 
-    // Methods for behaviours to set / add velocities
-    public void SetMovementVelocity (Vector3 velocity) 
-	{
-        current_velocity = velocity;
-	}
+    [Header("-------- Read Only --------")]
+    public Vector3 movement = Vector3.zero;
+    public float rotation = 0.0f; // degrees
 
-    //NEW
-	public void AccelerateMovement (Vector3 acceleration, int priority) 
-	{
-        movementVelocity[priority] = acceleration;
-	}
+    KinematicSeek seek;
+    KinematicFlee flee;
 
-	public void SetRotationVelocity (float rotation_speed) 
-	{
-        current_rotation_speed = rotation_speed;
-	}
+    public Vector3 mov_velocity = Vector3.zero;
 
-    //NEW
-	public void AccelerateRotation (float rotation_acceleration, int priority) 
-	{
-        angularVelocity[priority] = rotation_acceleration;
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
+    private Vector3 tank;
+
+    public void SetRotationVelocity(float rotation_velocity)
+    {
+        rotation = rotation_velocity;
+    }
+
+    // Use this for initialization
+    public void SetMovementVelocity(Vector3 vel)
+    {
+        mov_velocity = vel;
+    }
+
+    public void AccelerateMovement(Vector3 velocity, int priority)
+    {
+        movementVelocity[priority] += velocity;
+    }
+
+    public void AccelerateRotation(float rotation_acceleration, int priority)
+    {
+        angularVelocity[priority] += rotation_acceleration;
+    }
+
+    private void Start()
+    {
+        seek = GetComponent<KinematicSeek>();
+        tank = transform.position;
+        flee = GetComponent<KinematicFlee>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         //NEW
-        for (int i = 0; i < movementVelocity.Length; ++i)
+        if (mov_velocity.magnitude > max_mov_velocity) for (int i = 0; i < movementVelocity.Length; ++i)
         {
             if (!Mathf.Approximately(movementVelocity[i].magnitude, 0.0f))
             {
-                current_velocity = movementVelocity[i];
+                    mov_velocity = movementVelocity[i];
                 break;
             }
         }
@@ -61,32 +73,36 @@ public class Move : MonoBehaviour {
         {
             if (!Mathf.Approximately(angularVelocity[i], 0.0f))
             {
-                current_rotation_speed = angularVelocity[i];
+                rotation = angularVelocity[i];
                 break;
             }
         }
 
-        // cap velocity
-        if (current_velocity.magnitude > max_mov_speed)
-		{
-            current_velocity = current_velocity.normalized * max_mov_speed;
-		}
+        transform.position = new Vector3(transform.position.x, tank.y, transform.position.z);
 
-        // cap rotation
-        current_rotation_speed = Mathf.Clamp(current_rotation_speed, -max_rot_speed, max_rot_speed);
+        // TODO 2: Make sure mov_velocity is never bigger that max_mov_velocity
+        if (mov_velocity.magnitude > max_mov_velocity)
+        {
+            mov_velocity = mov_velocity.normalized * max_mov_velocity;
+        }
 
-		// rotate the arrow
-		float angle = Mathf.Atan2(current_velocity.x, current_velocity.z);
-		aim.transform.rotation = Quaternion.AngleAxis(Mathf.Rad2Deg * angle, Vector3.up);
+        // TODO 3: rotate the arrow to point to mov_velocity direction. First find out the angle
+        // then create a Quaternion with that expressed that rotation and apply it to aim.transform
+        float angle = Mathf.Rad2Deg * Mathf.Atan2(mov_velocity.x, mov_velocity.z);
 
-		// strech it
-		arrow.value = current_velocity.magnitude * 4;
+        aim.transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
 
-		// final rotate
-		transform.rotation *= Quaternion.AngleAxis(current_rotation_speed * Time.deltaTime, Vector3.up);
+        // TODO 4: stretch it the arrow (arrow.value) to show how fast the tank is getting push in
+        // that direction. Adjust with some factor so the arrow is visible.
+        arrow.value = mov_velocity.magnitude + 4.0f;
 
-		// finally move
-		transform.position += current_velocity * Time.deltaTime;
+        //transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
+
+        // TODO 5: update tank position based on final mov_velocity and deltatime
+        transform.position = transform.position + (mov_velocity * Time.deltaTime);
+
+        // Reset movement to 0 to simplify things ...
+        mov_velocity = Vector3.zero;
 
         //NEW
         for (int i = 0; i < SteeringConfig.priority_num; ++i)
@@ -95,4 +111,5 @@ public class Move : MonoBehaviour {
             angularVelocity[i] = 0.0f;
         }
     }
+}
 }
