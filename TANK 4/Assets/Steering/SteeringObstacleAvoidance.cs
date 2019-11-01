@@ -47,7 +47,7 @@ public class SteeringObstacleAvoidance : Steering {
             {
                 //position + normal * length
                 Vector3 awaySurface = hitInfo.point + hitInfo.normal * avoid_distance;
-                seek.Steer(awaySurface);
+                seek.Steer(awaySurface,priority);
             }
         }
     }

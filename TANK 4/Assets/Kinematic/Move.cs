@@ -70,11 +70,12 @@ public class Move : MonoBehaviour
         // cap velocity
         if (current_velocity.magnitude > max_mov_velocity)
         {
-            current_velocity = current_velocity.normalized * max_mov_velocity;
+            current_velocity.Normalize();
+            current_velocity *= max_mov_velocity;
         }
 
         // cap rotation
-        current_rotation_speed = Mathf.Clamp(current_rotation_speed, -max_rot_speed, max_rot_speed);
+        Mathf.Clamp(current_rotation_speed, -max_rot_speed, max_rot_speed);
 
         // rotate the arrow
         float angle = Mathf.Atan2(current_velocity.x, current_velocity.z);
@@ -87,7 +88,9 @@ public class Move : MonoBehaviour
         transform.rotation *= Quaternion.AngleAxis(current_rotation_speed * Time.deltaTime, Vector3.up);
 
         // finally move
+        current_velocity.y = 0.0f;
         transform.position += current_velocity * Time.deltaTime;
+    
 
         //NEW
         for (int i = 0; i < SteeringConfig.priority_num; ++i)

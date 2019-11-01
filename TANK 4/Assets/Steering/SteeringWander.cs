@@ -42,7 +42,7 @@ public class SteeringWander : Steering {
 
         timer += Time.deltaTime;
 
-        seek.Steer(move.target.transform.position);
+        seek.Steer(move.target.transform.position,priority);
 
     }
 

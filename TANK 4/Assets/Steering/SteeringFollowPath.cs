@@ -44,7 +44,7 @@ public class SteeringFollowPath : Steering {
             closestPoint = path.CalcPositionByDistanceRatio(current_ratio);
         }
 
-        seek.Steer(closestPoint);
+        seek.Steer(closestPoint,priority);
     }
 
 	void OnDrawGizmosSelected() 
