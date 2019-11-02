@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class KinematicFlee : MonoBehaviour {
+public class KinematicFlee : Steering {
 
     Move move;
     public Vector3 dir;
@@ -16,6 +16,6 @@ public class KinematicFlee : MonoBehaviour {
 	{
         // TODO 6: To create flee just switch the direction to go
         dir = transform.position - move.target.transform.position;
-        move.SetMovementVelocity(move.max_mov_velocity * dir.normalized);
+        move.SetMovementVelocity(move.max_mov_velocity * dir.normalized,priority);
     }
 }

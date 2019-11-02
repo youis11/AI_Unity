@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class KinematicSeek : MonoBehaviour {
+public class KinematicSeek : Steering
+{
 
     Move move;
     public Vector3 dir;
@@ -16,7 +17,7 @@ public class KinematicSeek : MonoBehaviour {
 	{
         // TODO 1: Set movement velocity to max speed in the direction of the target
         dir = move.target.transform.position - transform.position;
-        move.SetMovementVelocity(move.max_mov_velocity * dir.normalized);
+        move.SetMovementVelocity(move.max_mov_velocity * dir.normalized,priority);
 
         // Remember to enable this component in the inspector
     }

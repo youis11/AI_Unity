@@ -35,7 +35,7 @@ public class SteeringAlign : Steering {
             if (Mathf.Abs(angle) < min_angle)
             {
                 angularRotation = 0.0f;
-                move.SetRotationVelocity(angularRotation);
+                move.SetRotationVelocity(angularRotation,priority);
             }
         }
 

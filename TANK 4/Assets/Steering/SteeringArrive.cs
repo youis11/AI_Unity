@@ -32,10 +32,10 @@ public class SteeringArrive : Steering {
         // Use time_to_target as the time to transition from the current velocity to the desired velocity
         // Clamp the desired acceleration and call move.AccelerateMovement()
 
-        Vector3 diff = move.target.transform.position - transform.position;
+        Vector3 diff = target - transform.position;
 
         if (min_distance > diff.magnitude)
-            move.SetMovementVelocity(Vector3.zero);
+            move.SetMovementVelocity(Vector3.zero,priority);
         else
         {
             Vector3 diff_norm = diff.normalized * move.max_mov_velocity;
