@@ -6,7 +6,7 @@ public class SteeringSeparation : Steering
 {
     public LayerMask mask;
     public float search_radius = 5.0f;
-    public AnimationCurve falloff;
+    public AnimationCurve strength;
 
     Move move;
 
@@ -29,8 +29,6 @@ public class SteeringSeparation : Steering
 
         foreach (Collider col in colliders)
         {
-            Debug.Log("Collision!");
-
             Vector3 escapeVector = transform.position - col.transform.position;
             escapeVectorsSum += escapeVector;
         }
@@ -41,7 +39,7 @@ public class SteeringSeparation : Steering
             escapeVectorsSum /= colliders.Length;
 
         float t = escapeVectorsSum.magnitude / search_radius;
-        float escapeForce = falloff.Evaluate(t);
+        float escapeForce = strength.Evaluate(t);
 
         escapeVectorsSum.Normalize();
         escapeVectorsSum *= escapeForce;

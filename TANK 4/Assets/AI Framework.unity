@@ -1405,15 +1405,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a968724c3b6f64198b9b015470e4f6f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1579789855}
+  target: {fileID: 1079148645}
   aim: {fileID: 1399630582}
   arrow: {fileID: 1007177281}
   max_mov_velocity: 5
   max_mov_acceleration: 0.1
-  max_rot_speed: 10
+  max_rot_velocity: 10
   max_rot_acceleration: 1
   current_velocity: {x: 0, y: 0, z: 0}
-  current_rotation_speed: 0
+  rotation: 0
 --- !u!114 &653852217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1438,7 +1438,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653852214}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80e3618e1707546a19fff3fb11d7c9eb, type: 3}
   m_Name: 
@@ -1463,7 +1463,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653852214}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 782558cc3a6d845a990f61f72475c82d, type: 3}
   m_Name: 
@@ -1523,11 +1523,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   priority: 0
-  min_distance: 0.1
-  time_to_target: 0.25
-  wanderRate: 0.1
-  distanceToCircle: 4
-  circleRadius: 1
+  offset: {x: 0, y: 0, z: 0}
+  radius: 1
+  min_update: 0.5
+  max_update: 3
 --- !u!114 &653852223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1603,6 +1602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0f59a6c04e14ef2af5fe4bfa2aa885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priority: 0
   min_angle: 1
 --- !u!114 &653852228
 MonoBehaviour:
@@ -1617,6 +1617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf6b6fd22f5f4b65b812fae4a569998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priority: 0
   max_angle: 0.5
 --- !u!114 &653852229
 MonoBehaviour:
@@ -1631,6 +1632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 138f89118fd954731a72f3b8968a4592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priority: 0
   min_distance: 0.3
   time_to_target: 0.25
 --- !u!114 &653852230
@@ -1646,6 +1648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8eb8ad2c06c24d1b956414920f207bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priority: 0
   dir: {x: 0, y: 0, z: 0}
 --- !u!114 &653852231
 MonoBehaviour:
@@ -1660,6 +1663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e4f729fb7ecb4f4cb534791f38b264e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priority: 0
   dir: {x: 0, y: 0, z: 0}
 --- !u!4 &653852232
 Transform:
@@ -4624,10 +4628,10 @@ MonoBehaviour:
   arrow: {fileID: 705626895}
   max_mov_velocity: 5
   max_mov_acceleration: 1
-  max_rot_speed: 10
+  max_rot_velocity: 10
   max_rot_acceleration: 0.1
   current_velocity: {x: 0, y: 0, z: 0}
-  current_rotation_speed: 0
+  rotation: 0
 --- !u!114 &1579789857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4649,17 +4653,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579789855}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e439e859d063a4ca9983e1f7bb60411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   priority: 1
-  min_distance: 0.1
-  time_to_target: 0.25
-  wanderRate: 0.1
-  distanceToCircle: 4
-  circleRadius: 1
+  offset: {x: 0, y: 0, z: 0}
+  radius: 1
+  min_update: 0.5
+  max_update: 3
 --- !u!114 &1579789859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4712,7 +4715,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579789855}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 612fefe37772540c8bb2bcc1639f521e, type: 3}
   m_Name: 
@@ -4730,6 +4733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0f59a6c04e14ef2af5fe4bfa2aa885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priority: 0
   min_angle: 1
 --- !u!114 &1579789864
 MonoBehaviour:
@@ -4743,6 +4747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf6b6fd22f5f4b65b812fae4a569998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priority: 0
   max_angle: 0.5
 --- !u!114 &1579789865
 MonoBehaviour:
@@ -4756,6 +4761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 138f89118fd954731a72f3b8968a4592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priority: 0
   min_distance: 0.3
   time_to_target: 0.25
 --- !u!114 &1579789866
@@ -4770,6 +4776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8eb8ad2c06c24d1b956414920f207bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priority: 0
   dir: {x: 0, y: 0, z: 0}
 --- !u!114 &1579789867
 MonoBehaviour:
@@ -4783,6 +4790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e4f729fb7ecb4f4cb534791f38b264e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priority: 0
   dir: {x: 0, y: 0, z: 0}
 --- !u!4 &1579789868
 Transform:
@@ -4836,7 +4844,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579789855}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 782558cc3a6d845a990f61f72475c82d, type: 3}
   m_Name: 
@@ -4859,7 +4867,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579789855}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80e3618e1707546a19fff3fb11d7c9eb, type: 3}
   m_Name: 

@@ -42,9 +42,9 @@ public class SteeringObstacleAvoidance : Steering
             Vector3 newRay = q * ray.direction;
 
             RaycastHit hitInfo;
-            if (Physics.Raycast(transform.position, newRay, out hitInfo, ray.length, mask))
+            if (Physics.Raycast(new Vector3(transform.position.x, 1.0f, transform.position.z), newRay, out hitInfo, ray.length, mask))
             {
-                Vector3 escapeTargetPosition = hitInfo.point + hitInfo.normal * avoid_distance;
+                Vector3 escapeTargetPosition = new Vector3(hitInfo.point.x, transform.position.y, hitInfo.point.z) + hitInfo.normal * avoid_distance;
                 seek.Steer(escapeTargetPosition,priority);
             }
         }
